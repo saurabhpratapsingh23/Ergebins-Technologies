@@ -1,0 +1,91 @@
+.carousel-image {
+  height: 80vh; 
+  width: 100%; 
+  object-fit: cover; /* Make sure the image fits without distortion */
+  display: block; /* Ensure it behaves as a block element */
+  margin: auto; /* Center the image horizontally */
+}
+
+  
+  .carousel-title {
+    width: 50%;
+    font-size: 3rem !important; 
+    text-align: center;
+    color: #fff;
+    margin-bottom: 1rem;
+    font-weight: bold !important;
+  }
+  
+  .carousel-text {
+    font-size: 1rem !important; 
+    color: #fff;
+    text-align: center;
+  }
+  
+  @media (max-width: 768px) { 
+    .carousel-title {
+      font-size: 1.5rem; 
+    }
+  
+    .carousel-text {
+      font-size: 0.8rem; 
+    }
+  }
+  
+  @media (max-width: 576px) { 
+    .carousel-title {
+      font-size: 1.2rem; 
+    }
+  
+    .carousel-text {
+      font-size: 0.7rem; 
+    }
+  }
+ 
+  
+  .image-overlay {
+    
+    position: absolute;
+    top: 50%; /* Position the text vertically centered*/
+    left: 30%; /* Position the text horizontally centered*/
+    transform: translate(-50%, -50%); /* Center the overlay */
+    color: white; /* Text color */
+    text-align: center; /* Center align the content */
+    background-color: transparent; /* Add a semi-transparent background */
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 15px;
+    padding-bottom: 0px;
+    border-radius: 10px; /* Optional: Add rounded corners */
+  }
+  
+  .overlay-button {
+    display: inline-block;
+    padding: 10px 20px;
+    color: white;
+    
+    background-color: #ff2200; /* Button background color */
+    border: none;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .overlay-button:hover {
+    background-color: #b30000; /* Change color on hover */
+  }
+  
+  .image-overlay h2{
+    display: inline-block;
+    font-size: 84px;
+    text-decoration: solid;
+
+  }
+
+  .image-overlay p{
+    font-size: 20px;
+  }
+  .carousel-content{
+    width: 50% !important;
+  }

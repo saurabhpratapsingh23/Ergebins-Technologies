@@ -1,0 +1,165 @@
+body {
+  
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
+  
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.custom-bg {
+  background-color: #b85031;
+} 
+
+.text-color {
+  color:#132A13;
+}
+
+.text-color1 {
+  color:#D4AA00;
+}
+
+.border-color {
+  border-color: #132A13;
+}
+
+.custom-bg-text {
+  color:white;
+}
+
+.bg-color {
+  background-color:red;
+}
+
+.rounded-card {
+  padding: 1.5em .5em .5em;
+  border-radius: 2em;
+  box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+/* contact-card design */
+.contact-container {
+  width: auto;
+  height: auto;
+
+  padding-left: 400px;
+  padding-right: 400px;
+  margin-top: 100px;
+  margin-bottom: 50px;
+}
+
+.contact-info {
+  border-radius: 10px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Added inset box-shadow */
+}
+
+a {
+  text-decoration: none;
+}
+
+.contact-info:hover {
+  background-color: rgba(255, 0, 0, 0.637);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+/* contact_card design ends */
+
+.form-card {
+  padding: .2em .2em .2em;
+  border-radius: 1em;
+  box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  opacity: 0.8;
+}
+
+.card {
+  transition: transform 0.2s ease;
+}
+
+.card:hover .product-card  {
+  transform: scale(1.02);
+}
+
+.time-slots-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.time-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+}
+
+.time-row:last-child {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.time-slot-btn {
+  border: 1px solid #dee2e6;
+  background: white;
+  padding: 6px 12px;
+  width: 100%;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.time-slot-btn:hover {
+  background-color: #f8f9fa;
+  border-color: #c1c9d0;
+}
+
+.time-slot-btn.active {
+  background-color: #f8f9fa;
+  border-color: #0d6efd;
+  color: #0d6efd;
+}
+
+@media (max-width: 768px) {
+  .time-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .time-row:last-child {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .time-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .time-row:last-child {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.online_booking{
+  background-image: url('../src/images/38.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 400px;
+}
+
+.service-bg{
+  background-image: url('../src/images/cri-b.jpg');
+  background-size: cover;
+  height: 300px;
+}
+.serviceTable-bg{
+  background-image: url('../src/images/tt2.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: absolute;
+  height: 300px;
+}
