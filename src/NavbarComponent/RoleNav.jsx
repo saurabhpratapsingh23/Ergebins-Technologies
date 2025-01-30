@@ -6,15 +6,16 @@ import NormalHeader from "./NormalHeader";
 const RoleNav = () => {
   const [role, setRole] = useState(null);
 
-  const updateRole = () => {
-    const user = sessionStorage.getItem("active-customer");
-    const admin = sessionStorage.getItem("active-admin");
-
+  function updateRole() {
+    const user = sessionStorage.getItem("user-role");
+    const admin = sessionStorage.getItem("user-role");
+    console.log(user, admin);
     if (user) setRole("customer");
     else if (admin) setRole("admin");
     else setRole("normal");
+  
   };
-
+useEffect(()=>{console.log(role)},[role])
   useEffect(() => {
     updateRole();
     const handleRoleChange = () => updateRole();
@@ -26,5 +27,4 @@ const RoleNav = () => {
   if (role === "customer") return <CustomerHeader />;
   return <NormalHeader />;
 };
-
 export default RoleNav;

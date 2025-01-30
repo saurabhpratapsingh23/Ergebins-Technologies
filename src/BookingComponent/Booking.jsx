@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 import "./Booking.css";
 
 const Booking = () => {
   const [selectedSport, setSelectedSport] = useState("1"); // Default: cricket (sportId = 1)
   const [sportsOptions, setSportsOptions] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0]);
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [slots, setSlots] = useState([]);
   const [monthlyPackages, setMonthlyPackages] = useState([]);
   const [selectedSession, setSelectedSession] = useState("");
@@ -191,10 +193,9 @@ const Booking = () => {
 
       <div className="calendar-and-slots">
         <div className="calendar">
-          <input
-            type="date"
+        <Calendar
+            onChange={setSelectedDate}
             value={selectedDate}
-            onChange={(e) => setSelectedDate(e.target.value)}
           />
         </div>
 

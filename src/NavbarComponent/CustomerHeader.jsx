@@ -16,8 +16,8 @@ const CustomerHeader = () => {
     });
 
     // Clear session storage
-    sessionStorage.removeItem("active-customer");
-    sessionStorage.removeItem("customer-jwtToken");
+    sessionStorage.removeItem("user-role");
+    sessionStorage.removeItem("user-token");
 
     // Emit role change event
     window.dispatchEvent(new Event("roleChange"));
@@ -28,15 +28,15 @@ const CustomerHeader = () => {
 
   return (
     <ul className="navbar-nav ms-auto mb-2 mb-lg-0 me-5">
-      <li className="nav-item">
+      {/* <li className="nav-item">
         <Link to="/customer/wallet" className="nav-link active" aria-current="page">
           <b className="text-white">My Wallet</b>
         </Link>
-      </li>
+      </li> */}
 
       <li className="nav-item">
-        <Link to="/user/ground/bookings" className="nav-link active" aria-current="page">
-          <b className="text-white">Booked Turfs</b>
+        <Link to="/MyBookings" className="nav-link active" aria-current="page">
+          <b className="text-white">My Bookings</b>
         </Link>
       </li>
 

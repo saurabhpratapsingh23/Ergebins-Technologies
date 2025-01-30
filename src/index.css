@@ -145,19 +145,19 @@ a {
 }
 
 .online_booking{
-  background-image: url('../src/images/38.jpg');
+  /* background-image: url('../src/images/38.jpg'); */
   background-size: cover;
   background-repeat: no-repeat;
   height: 400px;
 }
 
 .service-bg{
-  background-image: url('../src/images/cri-b.jpg');
+  /* background-image: url('../src/images/cri-b.jpg'); */
   background-size: cover;
   height: 300px;
 }
 .serviceTable-bg{
-  background-image: url('../src/images/tt2.jpg');
+  /* background-image: url('../src/images/tt2.jpg'); */
   background-size: cover;
   background-repeat: no-repeat;
   background-position: absolute;

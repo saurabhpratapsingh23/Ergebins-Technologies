@@ -18,7 +18,7 @@ const OtpVerify = () => {
     formData.append('mobileNumber', mobileNumber);
 
     try {
-      const response = await fetch('http://54.175.97.144:8080/api/otp/sendOtp', {
+      const response = await fetch('http://54.165.1.101:8085/api/otp/sendOtp', {
         method: 'POST',
         body: formData, // Send as FormData instead of JSON
         // Remove Content-Type header to let the browser set it automatically with boundary
@@ -40,7 +40,7 @@ const OtpVerify = () => {
   const verifyOtp = async () => {
     try {
       const response = await fetch(
-        `http://54.175.97.144:8082/api/otp/verifyOtp?mobileNumber=${encodeURIComponent(
+        `http://54.165.1.101:8085/api/otp/verifyOtp?mobileNumber=${encodeURIComponent(
           mobileNumber
         )}&otp=${otp}`,
         {

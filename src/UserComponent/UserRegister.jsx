@@ -3,7 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import register from '../images/register.png';
+// import register from '../images/register.png';
 import Footer from "../page/Footer";
 
 const UserRegister = () => {
@@ -78,11 +78,11 @@ const UserRegister = () => {
       >
         <div className="row align-items-center justify-content-center py-4 px-4">
           <div className="col-lg-6 mb-4 mb-lg-0 text-center">
-            <img
+            {/* <img
               src={register}
               alt="Register Illustration"
               className="img-fluid rounded"
-            />
+            /> */}
           </div>
 
           <div className="col-lg-6">

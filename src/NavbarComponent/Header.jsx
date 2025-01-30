@@ -5,7 +5,7 @@ import RoleNav from "./RoleNav";
 
 const Header = () => {
   const [isSticky, setIsSticky] = useState(false);
-  const [role, setRole] = useState(null);
+  // const [role, setRole] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
@@ -13,26 +13,15 @@ const Header = () => {
       setIsSticky(window.scrollY > 0);
     };
 
-    const handleRoleChange = () => {
-      const user = JSON.parse(sessionStorage.getItem("active-customer"));
-      const admin = JSON.parse(sessionStorage.getItem("active-admin"));
-
-      if (user) {
-        setRole("customer");
-      } else if (admin) {
-        setRole("admin");
-      } else {
-        setRole("normal");
-      }
-    };
+   
 
     window.addEventListener("scroll", handleScroll);
-    handleRoleChange();
-    window.addEventListener("roleChange", handleRoleChange);
+    // handleRoleChange();
+    // window.addEventListener("roleChange", handleRoleChange);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("roleChange", handleRoleChange);
+      // window.removeEventListener("roleChange", handleRoleChange);
     };
   }, [location]);
 
@@ -115,7 +104,7 @@ const Header = () => {
             <Link to="/contact" className="nav-link text-white">
               Contact
             </Link>
-            <RoleNav role={role} />
+            <RoleNav />
           </nav>
           <div className="d-flex align-items-center">
             <button
