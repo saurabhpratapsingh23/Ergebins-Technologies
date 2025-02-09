@@ -1,0 +1,258 @@
+/* General Styles */
+body {
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.booking-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Breadcrumb Area */
+.breadcrumb-area {
+  background-size: cover;
+  background-position: center;
+  padding: 60px 0;
+  text-align: center;
+  color: #fff;
+}
+
+.breadcrumb-area .page-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* About Us Area */
+.about-us-area {
+  padding: 40px 0;
+}
+
+.about-us-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Calendar Styles */
+.calendar {
+  margin: 20px 0;
+  font-size: 16px;
+}
+
+.calendar_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background: #1089ff;
+  color: #fff;
+  border-radius: 10px 10px 0 0;
+}
+
+.calendar_header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.calendar_header button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.calendar_header button:hover {
+  color: #ffdd57;
+}
+
+.calendar_weekdays {
+  display: flex;
+  justify-content: space-around;
+  background: #1089ff;
+  color: #fff;
+  padding: 10px 0;
+  font-weight: bold;
+}
+
+.calendar_weekdays div {
+  width: 14.28%;
+  text-align: center;
+}
+
+.calendar_content {
+  display: flex;
+  flex-wrap: wrap;
+  background: #fff;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.calendar_content div {
+  width: 14.28%;
+  padding: 15px 0;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.calendar_content div:hover {
+  background: #f0f0f0;
+}
+
+.calendar_content div.today {
+  background: #fa3137;
+  color: #fff;
+  border-radius: 50%;
+}
+
+.calendar_content div.past-date {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+/* toggle Buttons */
+.toggle-button {
+  
+  
+  justify-content: center;
+ 
+  border-radius: 8px;
+}
+
+/* Session Selection */
+.slots {
+  margin: 20px 0;
+}
+
+.slots select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Time Slots */
+.events {
+  margin: 20px 0;
+}
+
+.events .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.events .cell {
+  flex: 1 1 calc(16.66% - 10px);
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.events .cell:hover {
+  background: #1089ff;
+  color: #fff;
+}
+
+.events .cell.disabled {
+  background: #f0f0f0;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Right Side Panel */
+.col-12.col-lg-5 {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.col-12.col-lg-5 h4 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 10px;
+}
+
+.col-12.col-lg-5 p {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 20px;
+}
+
+.col-12.col-lg-5 hr {
+  border: 0;
+  border-top: 1px solid #eee;
+  margin: 20px 0;
+}
+
+/* Buttons */
+.btn.alime-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #1089ff;
+  color: #fff;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.btn.alime-btn:hover {
+  background: #0a6ebd;
+}
+
+/* Subtotal and Due */
+.col-12.col-lg-12 {
+  text-align: right;
+  font-size: 18px;
+  margin: 20px 0;
+}
+
+.col-12.col-lg-12 strong {
+  color: #ff4410;
+}
+
+/* Social Sharing */
+.col-12.col-lg-5 p {
+  text-align: center;
+}
+
+.col-12.col-lg-5 a {
+  color: #fff;
+  margin: 0 10px;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+.col-12.col-lg-5 a:hover {
+  color: #0a6ebd;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .calendar_content div {
+    padding: 10px 0;
+  }
+
+  .events .cell {
+    flex: 1 1 calc(33.33% - 10px);
+  }
+
+  .col-12.col-lg-5 {
+    margin-top: 20px;
+  }
+}

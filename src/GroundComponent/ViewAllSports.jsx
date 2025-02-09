@@ -101,7 +101,7 @@ const ViewAllSports = () => {
                       and improve their technique
                     </p>
                     <button
-                      className="btn btn-warning text-white"
+                      className="btn btn-danger text-white"
                       onClick={handleBookNow}
                     >
                       Book Now
@@ -136,7 +136,7 @@ const ViewAllSports = () => {
                         {session.descriptionValidity}
                       </p>
                       <button
-                        className="btn btn-warning text-white"
+                        className="btn btn-danger text-white"
                         onClick={handleBookNow}
                       >
                         Book Now
@@ -153,6 +153,7 @@ const ViewAllSports = () => {
           )}
         </div>
       </section>
+      
         
       <section>
         <div className="container m-4">
@@ -175,12 +176,16 @@ const ViewAllSports = () => {
                 <a href="mailto:freehitzone@gmail.com">freehitzone@gmail.com</a>
               </p>
               <p>
-                <strong>Open today:</strong> 07:00 am – 10:00 pm
+                <strong>Contact:</strong> +91-9654606171
               </p>
+              <p>
+                <strong>Open today:</strong> 05:00 am – 11:00 pm
+              </p>
+              
             </div>
             <div className="col-lg-6 col-md-6 col-12">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18..."
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.5564465984903!2d77.34863252528952!3d28.643052975659035!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfb7f1df8baff:0x472436b3bd6c1325!2sGyan%20Khand%20II%2C%20Indirapuram%2C%20Ghaziabad%2C%20Uttar%20Pradesh%20201014!5e0!3m2!1sen!2sin!4v1732206170886!5m2!1sen!2sin"
                 width="100%"
                 height="400"
                 style={{ border: 0 }}

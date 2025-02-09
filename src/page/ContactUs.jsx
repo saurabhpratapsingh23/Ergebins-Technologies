@@ -31,9 +31,12 @@ const ContactUs = () => {
                   freehitzone@gmail.com
                 </a>
               </p>
+              <p>
+                <strong>Phone:</strong> +91-9654606171
+              </p>
               <p className="mb-4">
                 <strong>Open today:</strong> <br />
-                07:00 am – 10:00 pm
+                05:00 am – 11:00 pm
               </p>
             </div>
             </div>

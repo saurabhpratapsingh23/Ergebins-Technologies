@@ -40,7 +40,7 @@ const Carousel = () => {
           <img src={carousel3} className="d-block w-100 carousel-image" alt="..." />
           <div className="image-overlay carousel-content">
             <h2 className="carousel-title">
-              Indoor Table
+              Indoor Table <br></br>
               Tennis &
               Coaching
             </h2>

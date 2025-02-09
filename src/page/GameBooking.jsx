@@ -1,237 +1,267 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import React, { useState, useEffect } from "react";
+import "./GameBooking.css"; // Import the CSS file
+import Calendar from 'react-calendar'; // Import the Calendar component
+import 'react-calendar/dist/Calendar.css'; // Import the Calendar CSS
 
 const GameBooking = () => {
-  const [sportsId, setSportsId] = useState(1); // Default sportsId is 1
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [sessions, setSessions] = useState([]); // Stores regular sessions
-  const [monthlyPackages, setMonthlyPackages] = useState([]); // Stores monthly packages
-  const [selectedSession, setSelectedSession] = useState('');
-  const [selectedSessionDescription, setSelectedSessionDescription] = useState(''); // Stores the selected session's description
-  const [slots, setSlots] = useState([]); // Stores time slots
-  const [selectedSlot, setSelectedSlot] = useState('');
-  const [bookings, setBookings] = useState([]); // Stores all bookings
-  const [subtotal, setSubtotal] = useState(0); // Stores subtotal
-
-  // Fetch sports data (optional, if you want to allow switching sports)
+  const [selectedSession, setSelectedSession] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [selectedSport, setSelectedSport] = useState("");
   const [sports, setSports] = useState([]);
+  const [timeSlots, setTimeSlots] = useState([]);
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState("");
+  const [tableTennisSessions, setTableTennisSessions] = useState([]);
+  const [tableTennisWithoutRobotSessions, setTableTennisWithoutRobotSessions] = useState([]);
+  const [cricketSessions, setCricketSessions] = useState([]);
+
   useEffect(() => {
-    const fetchSports = async () => {
-      try {
-        const response = await axios.get('http://54.165.1.101:8085/api/freeHitZone/fetch');
-        setSports(response.data.sports);
-      } catch (error) {
-        console.error('Error fetching sports:', error);
-      }
-    };
-    fetchSports();
+    fetch("http://54.165.1.101:8085/api/freeHitZone/fetch")
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          setSports(data.sports);
+          setSelectedSport(data.sports[0].sportValue); // Set default selected sport
+        }
+      })
+      .catch(error => console.error("Error fetching sports:", error));
   }, []);
 
-  // Fetch sessions and monthly packages based on sportsId
   useEffect(() => {
-    const fetchSessionsAndPackages = async () => {
-      try {
-        // Fetch regular sessions
-        const sessionsResponse = await axios.get(`http://54.165.1.101:8085/api/freeHitZone/id?sportsId=${sportsId}`);
-        setSessions(sessionsResponse.data.sportsDescription);
+    fetch("http://54.165.1.101:8085/api/freeHitZone/fetch/slots?description=05")
+      .then(response => response.json())
+      .then(data => setTimeSlots(data))
+      .catch(error => console.error("Error fetching time slots:", error));
+  }, []);
 
-        // Fetch monthly packages
-        const packagesResponse = await axios.get(`http://54.165.1.101:8085/api/freeHitZone/monthlyPackage/id?sportsId=${sportsId}`);
-        setMonthlyPackages(packagesResponse.data.monthlyPackages);
-      } catch (error) {
-        console.error('Error fetching sessions or packages:', error);
-      }
-    };
-
-    fetchSessionsAndPackages();
-  }, [sportsId]);
-
-  // Fetch slots based on selected session's description
-  useEffect(() => {
-    const fetchSlots = async () => {
-      if (selectedSessionDescription) {
-        try {
-          const response = await axios.get(
-            `http://54.165.1.101:8085/api/freeHitZone/fetch/slots?description=${selectedSessionDescription}`
-          );
-          setSlots(response.data);
-        } catch (error) {
-          console.error('Error fetching slots:', error);
-        }
-      }
-    };
-
-    fetchSlots();
-  }, [selectedSessionDescription]);
-
-  // Handle session selection
-  const handleSessionChange = (e) => {
-    const sessionId = e.target.value;
-    const selectedSessionData = [...sessions, ...monthlyPackages].find(
-      (session) => session.id === parseInt(sessionId)
-    );
-
-    setSelectedSession(sessionId);
-    setSelectedSessionDescription(selectedSessionData.description.split(' ')[0]); // Extract the first part of the description (e.g., "05", "10", "20")
+  const handleSessionChange = (event) => {
+    setSelectedSession(event.target.value);
   };
 
-  // Handle add booking
-  const handleAddBooking = () => {
-    const selectedSessionData = [...sessions, ...monthlyPackages].find(
-      (session) => session.id === parseInt(selectedSession)
-    );
-
-    const newBooking = {
-      sportsId,
-      date: selectedDate.toISOString().split('T')[0], // Format date as YYYY-MM-DD
-      session: selectedSessionData.description,
-      slot: selectedSlot,
-      price: selectedSessionData.price,
-    };
-
-    setBookings([...bookings, newBooking]);
-    calculateSubtotal([...bookings, newBooking]);
-  };
-
-  // Handle delete booking
-  const handleDeleteBooking = (index) => {
-    const updatedBookings = bookings.filter((_, i) => i !== index);
-    setBookings(updatedBookings);
-    calculateSubtotal(updatedBookings);
-  };
-
-  // Calculate subtotal
-  const calculateSubtotal = (bookings) => {
-    const total = bookings.reduce((sum, booking) => sum + booking.price, 0);
-    const gst = total * 0.18;
-    const itServiceCharge = 10;
-    setSubtotal(total + gst + itServiceCharge);
-  };
-
-  // Handle book now
-  const handleBookNow = async () => {
-    try {
-      const bookingData = {
-        timeSlot: selectedSlot,
-        date: selectedDate.toISOString().split('T')[0],
-        sportsId,
-        description: `${selectedSession} - ${bookings[0].price}`, // Assuming only one booking for simplicity
-      };
-
-      const response = await axios.post('http://54.165.1.101:8085/api/book/sports', bookingData);
-      console.log('Booking successful:', response.data);
-
-      // Redirect to payment process (replace with your payment URL)
-      window.location.href = '/payment';
-    } catch (error) {
-      console.error('Error booking:', error);
+  const handleSportChange = (sportValue) => {
+    setSelectedSport(sportValue);
+    if (sportValue === "Cricket") {
+      fetch(`http://54.165.1.101:8085/api/freeHitZone/id?sportsId=1`)
+        .then(response => response.json())
+        .then(data => {
+       
+          if (data.success) {
+            setCricketSessions(data.sportsDescription);
+          }
+        })
+        .catch(error => console.error("Error fetching cricket sessions:", error));
+    } else if (sportValue === "Table Tennis") {
+      fetch(`http://54.165.1.101:8085/api/freeHitZone/id?sportsId=2`)
+        .then(response => response.json())
+        .then(data => {
+          console.log("Table Tennis Data:", data);
+          if (data.success) {
+            setTableTennisSessions(data.sportsDescription);
+          }
+        })
+        .catch(error => console.error("Error fetching table tennis sessions:", error));
     }
   };
 
+  const handleTimeSlotChange = (timeSlot) => {
+    setSelectedTimeSlot(timeSlot);
+  };
+
+  const handleTableTennisWithoutRobotClick = () => {
+    setSelectedSport("Table Tennis Without Robot");
+    fetch("http://54.165.1.101:8085/api/freeHitZone/fetch/tableTennisWithoutRobot")
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          setTableTennisWithoutRobotSessions(data.tableTennisWithRobot);
+        }
+      })
+      .catch(error => console.error("Error fetching table tennis sessions:", error));
+  };
+
   return (
-    <Container>
-      <h1>Booking Page</h1>
-      <Form>
-        {/* Sports Selection (Optional) */}
-        <Form.Group>
-          <Form.Label>Select Sport</Form.Label>
-          <Form.Control
-            as="select"
-            value={sportsId}
-            onChange={(e) => setSportsId(parseInt(e.target.value))}
+    <div className="booking-container">
+      <section>
+        <div className="heading my-4 text-center">
+          <h1>Start Booking your Slots </h1>
+        </div>
+      </section>
+
+      {/* calendar view */}
+      <div className="d-flex justify-content-center">
+        <div className="border rounded">
+          <Calendar onChange={setDate} value={date} />
+        </div>
+      </div>
+
+      <section>
+        {/* Toggle Buttons */}
+        <div className="toggle-main my-4 ">
+          {sports.map((sport) => (
+            <button
+              key={sport.id}
+              className={`toggle-button ${selectedSport === sport.sportValue ? "active" : ""}`}
+              onClick={() => handleSportChange(sport.sportValue)}
+              style={{ transition: "background-color 0.3s, color 0.3s" }}
+            >
+              {sport.sportValue}
+              
+            </button>
+          ))}
+          
+          <button
+            className={`toggle-button ${selectedSport === "Table Tennis Without Robot" ? "active" : ""}`}
+            style={{ transition: "background-color 0.3s, color 0.3s", backgroundColor: selectedSport === "Table Tennis Without Robot" ? "black" : "" }}
+            onClick={handleTableTennisWithoutRobotClick}
           >
-            {sports.map((sport) => (
-              <option key={sport.id} value={sport.id}>
-                {sport.sportValue}
-              </option>
-            ))}
-          </Form.Control>
-        </Form.Group>
+            Table Tennis Without Robot
+          </button>
+        </div>
+      </section>
 
-        {/* Date Selection */}
-        <Form.Group>
-          <Form.Label>Select Date</Form.Label>
-          <DatePicker
-            selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-            className="form-control"
-          />
-        </Form.Group>
-
+      <section>
         {/* Session Selection */}
-        <Form.Group>
-          <Form.Label>Select Session</Form.Label>
-          <Form.Control
-            as="select"
-            value={selectedSession}
-            onChange={handleSessionChange}
+        <div className="slots">
+          <p>
+            <strong>Select sessions</strong>
+          </p>
+          <select value={selectedSession} onChange={handleSessionChange}>
+            {selectedSport === "Table Tennis Without Robot" && tableTennisWithoutRobotSessions.length > 0 ? (
+              tableTennisWithoutRobotSessions.map(session => (
+                <option key={session.id} value={session.description}>
+                  {session.description} – ₹{session.price}
+                </option>
+              ))
+            ) : selectedSport === "Table Tennis" && tableTennisSessions.length > 0 ? (
+              tableTennisSessions.map(session => (
+                <option key={session.id} value={session.description}>
+                  {session.description} – ₹{session.price}
+                </option>
+              ))
+            ) : selectedSport === "Cricket" && cricketSessions.length > 0 ? (
+              cricketSessions.map(session => (
+                <option key={session.id} value={session.description}>
+                  {session.description} – ₹{session.price}
+                </option>
+              ))
+            ) : (
+              <>
+                {/* <option value="10 Over Session – ₹149">10 Over Session – ₹149</option>
+                <option value="20 Over Session – ₹249">20 Over Session – ₹249</option>
+                <option value="40 Over Session – ₹349">40 Over Session – ₹349</option> */}
+              </>
+            )}
+          </select>
+        </div>
+      </section>
+
+      <section>
+        {/* Timezone */}
+        <div style={{ marginBottom: "20px", textAlign: "center" }}>
+          (GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi
+        </div>
+
+        {/* Time Slots */}
+        <div className="events">
+          <div>
+            <div className="row text-center mx-0">
+              {timeSlots.map((time, index) => (
+                <div key={index} className="col-md-2 col-4 my-1 px-2">
+                  <div
+                    className={`cell py-1 ${selectedTimeSlot === time ? "selected" : ""}`}
+                    onClick={() => handleTimeSlotChange(time)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {time}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <a
+            href="#"
+            className="btn alime-btn mb-3 mb-sm-0"
+            style={{
+              fontSize: "18px !important",
+              height: "auto",
+              lineHeight: "35px",
+              marginTop: "15px !important",
+            }}
           >
-            <option value="">Select Session</option>
-            {sessions.map((session) => (
-              <option key={session.id} value={session.id}>
-                {session.description} - ₹{session.price}
-              </option>
-            ))}
-            {monthlyPackages.map((packageItem) => (
-              <option key={packageItem.id} value={packageItem.id}>
-                {packageItem.description} - ₹{packageItem.price}
-              </option>
-            ))}
-          </Form.Control>
-        </Form.Group>
+            + ADD
+          </a>
+        </div>
+      </section>
 
-        {/* Slot Selection */}
-        <Form.Group>
-          <Form.Label>Select Slot</Form.Label>
-          <Form.Control
-            as="select"
-            value={selectedSlot}
-            onChange={(e) => setSelectedSlot(e.target.value)}
+      <section>
+        {/* Right Side Panel */}
+        <div className="col-12 col-lg-5">
+          {/* Session Details */}
+          <div>
+            <button
+              className="glow-on-hover btn btn-danger"
+              style={{ border: "none", cursor: "pointer", float: "right" }}
+            >
+              <i
+                className="fa fa-trash-o"
+                aria-hidden="true"
+                style={{ color: "red", fontSize: "20px", float: "right" }}
+              ></i>
+            </button>
+            <h4>10 Over Session – ₹149</h4>
+            <p>Ideal for a quick practice session to sharpen your skills.</p>
+          </div>
+
+          <hr />
+
+          {/* Add more session details here */}
+
+          {/* Subtotal and Due */}
+          <div
+            className="col-12 col-lg-12"
+            style={{ textAlign: "left", fontSize: "20px" }}
           >
-            <option value="">Select Slot</option>
-            {slots.map((slot, index) => (
-              <option key={index} value={slot}>
-                {slot}
-              </option>
-            ))}
-          </Form.Control>
-        </Form.Group>
+            Subtotal <strong>₹600.00</strong>
+            <br />
+            Due now <strong>₹0.00</strong>
+          </div>
 
-        <Button onClick={handleAddBooking}>Add</Button>
-      </Form>
+          {/* Book Now Button */}
+          <a
+            href="#"
+            className="btn alime-btn mb-3 mb-sm-0"
+            style={{
+              fontSize: "20px !important",
+              height: "auto",
+              lineHeight: "35px",
+              marginTop: "10px !important",
+              width: "100%",
+              backgroundColor: "red",
+              textDecoration: "none",
+            }}
+          >
+            Book Now
+          </a>
 
-      {/* Display Bookings */}
-      <Row className="mt-4">
-        {bookings.map((booking, index) => (
-          <Col key={index} md={4}>
-            <Card>
-              <Card.Body>
-                <Card.Title>Booking {index + 1}</Card.Title>
-                <Card.Text>
-                  Date: {booking.date}
-                  <br />
-                  Session: {booking.session}
-                  <br />
-                  Slot: {booking.slot}
-                  <br />
-                  Price: ₹{booking.price}
-                </Card.Text>
-                <Button variant="danger" onClick={() => handleDeleteBooking(index)}>
-                  Delete
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-
-      {/* Subtotal and Book Now Button */}
-      <h3 className="mt-4">Subtotal: ₹{subtotal.toFixed(2)}</h3>
-      <Button onClick={handleBookNow}>Book Now</Button>
-    </Container>
+          {/* Social Sharing */}
+          <p style={{ textAlign: "left", margin: "15px 0" }}>
+            Share:
+            <a href="#">
+              <i className="ti-facebook bg-black" aria-hidden="true"></i>
+            </a>
+            <a href="#">
+              <i className="ti-twitter-alt" aria-hidden="true"></i>
+            </a>
+            <a href="#">
+              <i className="ti-linkedin" aria-hidden="true"></i>
+            </a>
+            <a href="#">
+              <i className="ti-pinterest" aria-hidden="true"></i>
+            </a>
+          </p>
+        </div>
+      </section>
+    </div>
   );
 };
 

@@ -25,6 +25,7 @@ useEffect(()=>{console.log(role)},[role])
 
   if (role === "admin") return <AdminHeader />;
   if (role === "customer") return <CustomerHeader />;
+  // console.log(role);
   return <NormalHeader />;
 };
 export default RoleNav;

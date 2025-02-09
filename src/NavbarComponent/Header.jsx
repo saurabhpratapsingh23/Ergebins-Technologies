@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../images/logo.png";
 import RoleNav from "./RoleNav";
+import '../styles/Header.css'
 
 const Header = () => {
   const [isSticky, setIsSticky] = useState(false);
@@ -108,14 +109,14 @@ const Header = () => {
           </nav>
           <div className="d-flex align-items-center">
             <button
-              className="btn btn-outline-danger me-2"
+              className="btn btn-danger me-2"
               onClick={handleWhatsAppClick}
             >
               <i className="bi bi-telephone-fill me-2"></i>
               <span>WhatsApp</span>
             </button>
             <button
-              className="btn btn-outline-danger"
+              className="btn btn-danger"
               onClick={() =>
                 window.location.href =
                 "https://maps.app.goo.gl/WgNUxXTDhtfReaqHA"
