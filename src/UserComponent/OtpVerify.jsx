@@ -2,27 +2,19 @@ import React, { useState } from 'react';
 import Footer from '../page/Footer';
 
 const OtpVerify = () => {
-  const [mobileNumber, setMobileNumber] = useState(''); 
+  const [mobileNumber, setMobileNumber] = useState('');
   const [otp, setOtp] = useState('');
   const [message, setMessage] = useState('');
-  const [otpSent, setOtpSent] = useState(false); 
-
-  const handleUserInput = (e) => {
-    setMobileNumber(e.target.value);
-  };
+  const [otpSent, setOtpSent] = useState(false);
 
   // Function to send OTP
   const sendOtp = async () => {
-    // Create FormData object
-    const formData = new FormData();
-    formData.append('mobileNumber', mobileNumber);
-
     try {
-      const response = await fetch('http://54.165.1.101:8085/api/otp/sendOtp', {
+      const response = await fetch(`http://54.165.1.101:8085/api/otp/sendOtp?mobileNumber=+91${mobileNumber}`, {
         method: 'POST',
-        body: formData, // Send as FormData instead of JSON
-        // Remove Content-Type header to let the browser set it automatically with boundary
       });
+
+      // console.log(response);
 
       if (response.ok) {
         setMessage('OTP sent successfully!');
@@ -40,9 +32,7 @@ const OtpVerify = () => {
   const verifyOtp = async () => {
     try {
       const response = await fetch(
-        `http://54.165.1.101:8085/api/otp/verifyOtp?mobileNumber=${encodeURIComponent(
-          mobileNumber
-        )}&otp=${otp}`,
+        `http://54.165.1.101:8085/api/otp/verifyOtp?mobileNumber=+91${mobileNumber}&otp=${otp}`,
         {
           method: 'GET',
         }
@@ -74,9 +64,9 @@ const OtpVerify = () => {
             className="form-control rounded-pill"
             id="mobileNumber"
             name="mobileNumber"
-            onChange={handleUserInput}
+            onChange={(e) => setMobileNumber(e.target.value)}
             value={mobileNumber}
-            placeholder="Enter mobile number with country code"
+            placeholder="Enter mobile number without country code"
           />
         </div>
         <button

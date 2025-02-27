@@ -27,7 +27,7 @@ const GameBooking = () => {
   }, []);
 
   useEffect(() => {
-    fetch("http://54.165.1.101:8085/api/freeHitZone/fetch/slots?description=05")
+    fetch("http://54.165.1.101:8085/api/freeHitZone/fetch/slots?description=10")
       .then(response => response.json())
       .then(data => setTimeSlots(data))
       .catch(error => console.error("Error fetching time slots:", error));
@@ -53,7 +53,7 @@ const GameBooking = () => {
       fetch(`http://54.165.1.101:8085/api/freeHitZone/id?sportsId=2`)
         .then(response => response.json())
         .then(data => {
-          console.log("Table Tennis Data:", data);
+          // console.log("Table Tennis Data:", data);
           if (data.success) {
             setTableTennisSessions(data.sportsDescription);
           }
@@ -179,7 +179,7 @@ const GameBooking = () => {
           </div>
 
           <a
-            href="#"
+            href="/"
             className="btn alime-btn mb-3 mb-sm-0"
             style={{
               fontSize: "18px !important",
@@ -228,7 +228,7 @@ const GameBooking = () => {
 
           {/* Book Now Button */}
           <a
-            href="#"
+            href="/"
             className="btn alime-btn mb-3 mb-sm-0"
             style={{
               fontSize: "20px !important",
@@ -246,16 +246,16 @@ const GameBooking = () => {
           {/* Social Sharing */}
           <p style={{ textAlign: "left", margin: "15px 0" }}>
             Share:
-            <a href="#">
+            <a href="/">
               <i className="ti-facebook bg-black" aria-hidden="true"></i>
             </a>
-            <a href="#">
+            <a href="/">
               <i className="ti-twitter-alt" aria-hidden="true"></i>
             </a>
-            <a href="#">
+            <a href="/">
               <i className="ti-linkedin" aria-hidden="true"></i>
             </a>
-            <a href="#">
+            <a href="/">
               <i className="ti-pinterest" aria-hidden="true"></i>
             </a>
           </p>
