@@ -163,6 +163,31 @@ const UserLoginForm = () => {
                   Login
                 </button>
               </div>
+              <div className="text-center">
+                <a
+                  href="/user/customer/forgot-password"
+                  style={{
+                    color: "#ff4d4f",
+                    fontSize: "1rem",
+                  }}
+                >Forgot Password</a>
+              </div>
+              <div className="d-flex align-items-center justify-content-center">
+                    <b>Don't have an account?</b>
+                    <a
+                      href="/user/customer/register"
+                      // className="px-5 py-2"
+                      style={{
+                        color: "linear-gradient(45deg, #ff4d4f, #ff6a3d)",
+                        padding: "0.5rem 1rem",
+                        border: "none",
+                        fontSize: "1rem",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Register
+                    </a>
+                  </div>
             </form>
             <ToastContainer />
           </div>

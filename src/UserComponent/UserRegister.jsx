@@ -3,7 +3,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-// import register from '../images/register.png';
 import Footer from "../page/Footer";
 
 const UserRegister = () => {
@@ -11,7 +10,7 @@ const UserRegister = () => {
     emailId: "",
     mobileNumber: "",
     password: "",
-    role: "customer", 
+    role: "customer",
   });
 
   const navigate = useNavigate();
@@ -25,6 +24,7 @@ const UserRegister = () => {
 
     try {
       const response = await axios.post(
+        // `http://54.165.1.101:8085/api/user/register`,
         `http://localhost:8085/api/user/register`,
         user
       );
@@ -67,13 +67,23 @@ const UserRegister = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        // backgroundImage: "url('/path/to/background.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+      }}
+    >
       <div
         className="container my-5"
         style={{
           boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
           borderRadius: '10px',
-          background: "#f8f9fa",
+          background: "rgba(248, 249, 250, 0.9)",
         }}
       >
         <div className="row align-items-center justify-content-center py-4 px-4">
@@ -154,6 +164,22 @@ const UserRegister = () => {
                     >
                       Register
                     </button>
+                  </div>
+                  <div className="d-flex align-items-center justify-content-center">
+                    <b>Already have an account?</b>
+                    <a
+                      href="/user/login"
+                      // className="px-5 py-2"
+                      style={{
+                        color: "linear-gradient(45deg, #ff4d4f, #ff6a3d)",
+                        padding: "0.5rem 1rem",
+                        border: "none",
+                        fontSize: "1rem",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Login
+                    </a>
                   </div>
                 </form>
                 <ToastContainer />
