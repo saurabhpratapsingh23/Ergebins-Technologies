@@ -49,7 +49,7 @@ const GameBooking = () => {
           }
         })
         .catch(error => console.error("Error fetching cricket sessions:", error));
-    } else if (sportValue === "Table Tennis") {
+    } else if (sportValue === "TableTennis") {
       fetch(`http://54.165.1.101:8085/api/freeHitZone/id?sportsId=2`)
         .then(response => response.json())
         .then(data => {

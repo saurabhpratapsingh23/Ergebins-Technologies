@@ -24,7 +24,8 @@ const UserRegister = () => {
 
     try {
       const response = await axios.post(
-        `http://54.165.1.101:8085/api/user/register`,
+        // `http://54.165.1.101:8085/api/user/register`,
+        `http://localhost:8085/api/user/register`,
         user
       );
 
@@ -86,6 +87,9 @@ const UserRegister = () => {
         }}
       >
         <div className="row align-items-center justify-content-center py-4 px-4">
+          <div className="col-lg-6 mb-4 mb-lg-0 text-center">
+           
+          </div>
 
           <div className="col-lg-6">
             <div
