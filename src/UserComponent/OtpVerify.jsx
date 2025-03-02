@@ -1,133 +1,132 @@
-import React, { useState } from 'react';
-import Footer from '../page/Footer';
+import React, { useState, useEffect } from "react";
+import { Form, Button, Alert, Container } from "react-bootstrap";
 
 const OtpVerify = () => {
-  const [mobileNumber, setMobileNumber] = useState(''); 
-  const [otp, setOtp] = useState('');
-  const [message, setMessage] = useState('');
-  const [otpSent, setOtpSent] = useState(false); 
+    const [mobile, setMobile] = useState("");
+    const [otp, setOtp] = useState("");
+    const [otpSent, setOtpSent] = useState(false);
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+    const [timer, setTimer] = useState(120); // 2 minutes timer
 
-  const handleUserInput = (e) => {
-    setMobileNumber(e.target.value);
-  };
-
-  // Function to send OTP
-  const sendOtp = async () => {
-    // Create FormData object
-    const formData = new FormData();
-    formData.append('mobileNumber', mobileNumber);
-
-    try {
-      const response = await fetch('http://54.165.1.101:8085/api/otp/sendOtp', {
-        method: 'POST',
-        body: formData, // Send as FormData instead of JSON
-        // Remove Content-Type header to let the browser set it automatically with boundary
-      });
-
-      if (response.ok) {
-        setMessage('OTP sent successfully!');
-        setOtpSent(true);
-      } else {
-        const error = await response.json();
-        setMessage(`Failed to send OTP: ${error.message}`);
-      }
-    } catch (error) {
-      setMessage(`An error occurred: ${error.message}`);
-    }
-  };
-
-  // Function to verify OTP
-  const verifyOtp = async () => {
-    try {
-      const response = await fetch(
-        `http://54.165.1.101:8085/api/otp/verifyOtp?mobileNumber=${encodeURIComponent(
-          mobileNumber
-        )}&otp=${otp}`,
-        {
-          method: 'GET',
+    // Function to start the timer
+    useEffect(() => {
+        let interval;
+        if (otpSent && timer > 0) {
+            interval = setInterval(() => {
+                setTimer((prevTime) => prevTime - 1);
+            }, 1000);
         }
-      );
+        return () => clearInterval(interval);
+    }, [otpSent, timer]);
 
-      if (response.ok) {
-        const data = await response.json();
-        setMessage('OTP verified successfully!');
-        console.log(data);
-      } else {
-        const error = await response.json();
-        setMessage(`Failed to verify OTP: ${error.message}`);
-      }
-    } catch (error) {
-      setMessage(`An error occurred: ${error.message}`);
-    }
-  };
+    // Function to send OTP
+    const sendOtp = async () => {
+        setError("");
+        setSuccess("");
 
-  return (
-    <>
-      <div className="container text-center" style={{ marginTop: '50px' }}>
-        <h2>OTP Verification</h2>
-        <div className="mb-3" style={{width:'50%',margin:'auto'}}>
-          <label htmlFor="mobileNumber" className="form-label">
-            <b>Mobile Number</b>
-          </label>
-          <input
-            type="tel"
-            className="form-control rounded-pill"
-            id="mobileNumber"
-            name="mobileNumber"
-            onChange={handleUserInput}
-            value={mobileNumber}
-            placeholder="Enter mobile number with country code"
-          />
-        </div>
-        <button
-          onClick={sendOtp}
-          className="btn text-white px-5 py-2 rounded-pill"
-          style={{
-            background: "linear-gradient(45deg, #ff4d4f, #ff6a3d)",
-            border: "none",
-            fontSize: "1rem",
-            fontWeight: "bold",
-          }}
-          disabled={otpSent}
-        >
-          {otpSent ? 'OTP Sent' : 'Send OTP'}
-        </button>
+        if (mobile.length !== 10) {
+            setError("Please enter a valid 10-digit mobile number.");
+            return;
+        }
 
-        {otpSent && (
-          <>
-            <div className="mb-3" style={{width:'50%',margin:'auto', marginTop: '20px'}}>
-              <label htmlFor="otp" className="form-label">
-                <b>Enter OTP</b>
-              </label>
-              <input
-                type="text"
-                className="form-control rounded-pill"
-                id="otp"
-                name="otp"
-                onChange={(e) => setOtp(e.target.value)}
-                value={otp}
-                placeholder="Enter OTP"
-              />
-            </div>
-            <button
-              onClick={verifyOtp}
-              className="btn text-white px-5 py-2 rounded-pill"
-              style={{
-                background: "linear-gradient(45deg, #ff4d4f, #ff6a3d)",
-                border: "none",
-                fontSize: "1rem",
-                fontWeight: "bold",
-              }}
-            >
-              Verify OTP
-            </button>
-          </>
-        )}
-        <p style={{ marginTop: '20px', color: 'blue' }}>{message}</p>
-      </div>
-      <Footer />
-    </>
-  );
+        try {
+            const response = await fetch(
+                `http://localhost:8085/api/otp/sendOtp?mobileNumber=+91${mobile}`,
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" }
+                }
+            );
+
+            if (!response.ok) throw new Error(`Error ${response.status}: ${response.statusText}`);
+
+            setOtpSent(true);
+            setTimer(120); // Reset timer to 2 minutes
+            setSuccess("OTP sent successfully!");
+        } catch (error) {
+            setError("Failed to send OTP. Please try again.");
+        }
+    };
+
+    // Function to verify OTP
+    const verifyOtp = async () => {
+        setError("");
+        setSuccess("");
+
+        if (!otp) {
+            setError("Please enter the OTP.");
+            return;
+        }
+
+        try {
+            const response = await fetch(
+                `http://localhost:8085/api/otp/verifyOtp?mobileNumber=+91${mobile}&otp=${otp}`,
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" }
+                }
+            );
+
+            if (!response.ok) throw new Error(`Error ${response.status}: ${response.statusText}`);
+
+            setSuccess("OTP verified successfully! Redirecting...");
+            setTimeout(() => (window.location.href = "/user/login"), 2000);
+        } catch (error) {
+            setError("Invalid OTP. Please try again.");
+        }
+    };
+
+    return (
+        <Container className="mt-4">
+            <h3 className="mb-3">OTP Verification</h3>
+
+            {error && <Alert variant="danger">{error}</Alert>}
+            {success && <Alert variant="success">{success}</Alert>}
+
+            {!otpSent ? (
+                <Form>
+                    <Form.Group controlId="mobile">
+                        <Form.Label>Enter Mobile Number</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter 10-digit number"
+                            value={mobile}
+                            onChange={(e) => setMobile(e.target.value)}
+                            maxLength={10}
+                        />
+                    </Form.Group>
+                    <Button variant="primary" className="mt-3" onClick={sendOtp}>
+                        Send OTP
+                    </Button>
+                </Form>
+            ) : (
+                <Form>
+                    <Form.Group controlId="otp">
+                        <Form.Label>Enter OTP</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter OTP"
+                            value={otp}
+                            onChange={(e) => setOtp(e.target.value)}
+                        />
+                    </Form.Group>
+
+                    <Button variant="success" className="mt-3" onClick={verifyOtp}>
+                        Verify OTP
+                    </Button>
+
+                    {timer > 0 ? (
+                        <p className="mt-2">Resend OTP in {timer}s</p>
+                    ) : (
+                        <Button variant="secondary" className="mt-2" onClick={sendOtp}>
+                            Resend OTP
+                        </Button>
+                    )}
+                </Form>
+            )}
+        </Container>
+    );
 };
 
 export default OtpVerify;
