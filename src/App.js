@@ -26,7 +26,7 @@ import Services from "./page/Services";
 import Cricket from "./page/Services/Cricket";
 import TableTennis from "./page/Services/TableTennis";
 import OtpVerify from "./UserComponent/OtpVerify";
-
+import ForgetPassword from "./UserComponent/ForgetPassword";
 
 function App() {
   return (
@@ -45,6 +45,7 @@ function App() {
         <Route path="/user/login" element={<UserLoginForm />} />
         <Route path="/user/verifyotp" element={<OtpVerify />} />
         <Route path="/booking" element={<Booking />} />
+        <Route path="/user/customer/forget-password" element={<ForgetPassword />} />
 
         {/* <Route path="admin/ground/add" element={<AddGroundForm />} />
         <Route path="book/ground/add" element={<AddGroundForm />} />
