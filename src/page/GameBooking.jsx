@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./GameBooking.css"; // Import the CSS file
 import Calendar from 'react-calendar'; // Import the Calendar component
 import 'react-calendar/dist/Calendar.css'; // Import the Calendar CSS
-import { data } from '../mockAPI/MockAPI';
+// import { data } from '../mockAPI/MockAPI';
 
 const GameBooking = () => {
   const [selectedSession, setSelectedSession] = useState("");

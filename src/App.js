@@ -21,8 +21,8 @@ import Booking from "./BookingComponent/Booking";
 // import './path-to-classy-navbar.css'; // Update the path as necessary
 import UserBooking from "./BookingComponent/UserBooking";
 import GameBooking from "./page/GameBooking";
-import Footer from "./page/Footer";
-import Services from "./page/Services";
+// import Footer from "./page/Footer";
+// import Services from "./page/Services";
 import Cricket from "./page/Services/Cricket";
 import TableTennis from "./page/Services/TableTennis";
 import OtpVerify from "./UserComponent/OtpVerify";
