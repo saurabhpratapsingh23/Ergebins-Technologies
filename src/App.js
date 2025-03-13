@@ -62,8 +62,8 @@ function App() {
         <Route path="/ground/review/add" element={<AddReview />} />
         <Route path="/admin/ground/all" element={<ViewAllGround />} /> */}
         <Route path="/freeHitZone/AllSports" element={<ViewAllSports />} />
-        <Route path="/Gamebooking" element={<GameBooking/>} />
-        <Route path="/UserBooking"element={<UserBooking/>} />
+        <Route path="/gamebooking" element={<GameBooking/>} />
+        <Route path="/myBookings"element={<UserBooking/>} />
         <Route path="/services/cricket" element={<Cricket/>} />
         <Route path="/services/tennis" element={<TableTennis/>} />
         {/* <Route path="user/admin/booking/all" element={<ViewAllBooking />} />
