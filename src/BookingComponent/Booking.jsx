@@ -9,7 +9,7 @@ import "./Booking.css";
 const Booking = () => {
   const [selectedSport, setSelectedSport] = useState("1"); // Default: cricket (sportId = 1)
   const [sportsOptions, setSportsOptions] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [dateRange, setDateRange] = useState([new Date(), new Date()]);
   const [slots, setSlots] = useState([]);
   const [monthlyPackages, setMonthlyPackages] = useState([]);
   const [selectedSession, setSelectedSession] = useState("");
@@ -128,7 +128,7 @@ const Booking = () => {
     }
 
     const slotData = {
-      date: selectedDate,
+      dateRange: dateRange,
       session: selectedSession,
       time: selectedTimeSlot,
       price: sessionData.price,
@@ -153,7 +153,7 @@ const Booking = () => {
       const bookingData = {
         bookingId: null, // Assuming the server will generate the bookingId
         timeSlot: selectedTimeSlot, // Ensure this value is dynamically set from the page
-        date: selectedDate.replace(/-/g, "/"), // Convert date format to "YYYY/MM/DD"
+        dateRange: dateRange.map(date => date.toISOString().split('T')[0]), // Convert date format to "YYYY-MM-DD"
         userId: 1, // Replace with the actual user ID dynamically
         sportsId: selectedSport, // Replace with the actual sports ID dynamically
         status: "active",
@@ -212,10 +212,17 @@ const Booking = () => {
       )}
 
       <div className="calendar-and-slots">
-        <div className="calendar">
-        <Calendar
-            onChange={setSelectedDate}
-            value={selectedDate}
+        <div className="calendar" style={{ padding: "10px", backgroundColor: "#f9f9f9", border: "1px solid #ddd", borderRadius: "8px" }}>
+          <Calendar
+            onChange={setDateRange}
+            value={dateRange}
+            selectRange={true}
+            tileDisabled={({ date }) => date < new Date().setHours(0, 0, 0, 0)}
+            tileClassName={({ date, view }) => {
+              if (date < new Date().setHours(0, 0, 0, 0)) {
+                return 'disabled';
+              }
+            }}
           />
         </div>
 
@@ -259,7 +266,7 @@ const Booking = () => {
         <ul>
           {selectedBookings.map((booking, index) => (
             <li key={index}>
-              {booking.date} - {booking.session} - {booking.time} - ₹{booking.price}
+              {booking.dateRange[0].toLocaleDateString()} - {booking.dateRange[1].toLocaleDateString()} - {booking.session} - {booking.time} - ₹{booking.price}
               <button onClick={() => removeBooking(index)} className="remove-button">Remove</button>
             </li>
           ))}

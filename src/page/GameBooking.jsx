@@ -6,7 +6,7 @@ import { data } from '../mockAPI/MockAPI'; // Import mock data
 
 const GameBooking = () => {
   const [selectedSession, setSelectedSession] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [dateRange, setDateRange] = useState([new Date(), new Date()]);
   const [selectedSport, setSelectedSport] = useState(data.fetchSports.sports[0].sportValue); // Use mock data as fallback
   const [sports, setSports] = useState(data.fetchSports.sports); // Use mock data as fallback
   const [timeSlots, setTimeSlots] = useState(data.fetchSlots); // Use mock data as fallback
@@ -87,8 +87,18 @@ const GameBooking = () => {
 
       {/* calendar view */}
       <div className="d-flex justify-content-center">
-        <div className="border rounded">
-          <Calendar onChange={setDate} value={date} />
+        <div className="border rounded" style={{ padding: "10px", backgroundColor: "#f9f9f9", border: "1px solid #ddd", borderRadius: "8px" }}>
+          <Calendar
+            onChange={setDateRange}
+            value={dateRange}
+            selectRange={true}
+            tileDisabled={({ date }) => date < new Date().setHours(0, 0, 0, 0)}
+            tileClassName={({ date, view }) => {
+              if (date < new Date().setHours(0, 0, 0, 0)) {
+                return 'disabled';
+              }
+            }}
+          />
         </div>
       </div>
 
