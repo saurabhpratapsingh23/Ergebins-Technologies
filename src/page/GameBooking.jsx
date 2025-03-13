@@ -2,18 +2,18 @@ import React, { useState, useEffect } from "react";
 import "./GameBooking.css"; // Import the CSS file
 import Calendar from 'react-calendar'; // Import the Calendar component
 import 'react-calendar/dist/Calendar.css'; // Import the Calendar CSS
-// import { data } from '../mockAPI/MockAPI';
+import { data } from '../mockAPI/MockAPI'; // Import mock data
 
 const GameBooking = () => {
   const [selectedSession, setSelectedSession] = useState("");
   const [date, setDate] = useState(new Date());
-  const [selectedSport, setSelectedSport] = useState("");
-  const [sports, setSports] = useState([]);
-  const [timeSlots, setTimeSlots] = useState([]);
+  const [selectedSport, setSelectedSport] = useState(data.fetchSports.sports[0].sportValue); // Use mock data as fallback
+  const [sports, setSports] = useState(data.fetchSports.sports); // Use mock data as fallback
+  const [timeSlots, setTimeSlots] = useState(data.fetchSlots); // Use mock data as fallback
   const [selectedTimeSlot, setSelectedTimeSlot] = useState("");
-  const [tableTennisSessions, setTableTennisSessions] = useState([]);
-  const [tableTennisWithoutRobotSessions, setTableTennisWithoutRobotSessions] = useState([]);
-  const [cricketSessions, setCricketSessions] = useState([]);
+  const [tableTennisSessions, setTableTennisSessions] = useState(data.fetchSportsById[2].sportsDescription); // Use mock data as fallback
+  const [tableTennisWithoutRobotSessions, setTableTennisWithoutRobotSessions] = useState(data.fetchTableTennisWithoutRobot.tableTennisWithRobot); // Use mock data as fallback
+  const [cricketSessions, setCricketSessions] = useState(data.fetchSportsById[1].sportsDescription); // Use mock data as fallback
 
   useEffect(() => {
     fetch("http://54.165.1.101:8085/api/freeHitZone/fetch")
@@ -44,7 +44,6 @@ const GameBooking = () => {
       fetch(`http://54.165.1.101:8085/api/freeHitZone/id?sportsId=1`)
         .then(response => response.json())
         .then(data => {
-       
           if (data.success) {
             setCricketSessions(data.sportsDescription);
           }
@@ -54,7 +53,6 @@ const GameBooking = () => {
       fetch(`http://54.165.1.101:8085/api/freeHitZone/id?sportsId=2`)
         .then(response => response.json())
         .then(data => {
-          // console.log("Table Tennis Data:", data);
           if (data.success) {
             setTableTennisSessions(data.sportsDescription);
           }
@@ -105,10 +103,8 @@ const GameBooking = () => {
               style={{ transition: "background-color 0.3s, color 0.3s" }}
             >
               {sport.sportValue}
-              
             </button>
           ))}
-          
           <button
             className={`toggle-button ${selectedSport === "Table Tennis Without Robot" ? "active" : ""}`}
             style={{ transition: "background-color 0.3s, color 0.3s", backgroundColor: selectedSport === "Table Tennis Without Robot" ? "black" : "" }}
@@ -145,11 +141,7 @@ const GameBooking = () => {
                 </option>
               ))
             ) : (
-              <>
-                {/* <option value="10 Over Session – ₹149">10 Over Session – ₹149</option>
-                <option value="20 Over Session – ₹249">20 Over Session – ₹249</option>
-                <option value="40 Over Session – ₹349">40 Over Session – ₹349</option> */}
-              </>
+              <option value="">No sessions available</option>
             )}
           </select>
         </div>

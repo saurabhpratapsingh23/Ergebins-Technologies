@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { fetchMockData } from "../mockAPI/MockAPI"; // Import the mock API
 
 import "./Booking.css";
 
@@ -18,18 +19,10 @@ const Booking = () => {
   const [timeSlots, setTimeSlots] = useState([]);
   const [showTableTennisWithoutRobot, setShowTableTennisWithoutRobot] = useState(false);
   const [isBookingConfirmed, setIsBookingConfirmed] = useState(false);
-  const [bookingDetails, setBookingDetails] = useState(null);
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchSportsOptions();
-    fetchSlotsForSport();
-    fetchMonthlyPackages();
-    fetchTimeSlots();
-  }, [selectedSport]);
-
-  const fetchSportsOptions = async () => {
+  const fetchSportsOptions = useCallback(async () => {
     try {
       const response = await fetch("http://192.168.1.6:8080/api/freeHitZone/fetch");
       const data = await response.json();
@@ -37,11 +30,17 @@ const Booking = () => {
         setSportsOptions(data.sports || []);
       }
     } catch (error) {
-      console.error("Error fetching sports options:", error);
+      // Use mock data in case of error
+      const mockData = fetchMockData("fetchSports");
+      if (mockData) {
+        setSportsOptions(mockData.sports);
+      } else {
+        console.error("Error fetching sports options:", error);
+      }
     }
-  };
+  }, []);
 
-  const fetchSlotsForSport = async () => {
+  const fetchSlotsForSport = useCallback(async () => {
     try {
       const endpoint =
         selectedSport === "tableTennisWithoutRobot"
@@ -53,11 +52,17 @@ const Booking = () => {
         setSlots(data.sportsDescription || []);
       }
     } catch (error) {
-      console.error("Error fetching slots:", error);
+      // Use mock data in case of error
+      const mockData = fetchMockData("fetchSportsById")[selectedSport];
+      if (mockData) {
+        setSlots(mockData.sportsDescription);
+      } else {
+        console.error("Error fetching slots:", error);
+      }
     }
-  };
+  }, [selectedSport]);
 
-  const fetchMonthlyPackages = async () => {
+  const fetchMonthlyPackages = useCallback(async () => {
     try {
       if (selectedSport === "tableTennisWithoutRobot") return;
       const response = await fetch(
@@ -68,19 +73,38 @@ const Booking = () => {
         setMonthlyPackages(data.monthlyPackages || []);
       }
     } catch (error) {
-      console.error("Error fetching monthly packages:", error);
+      // Use mock data in case of error
+      const mockData = fetchMockData("fetchMonthlyPackagesById")[selectedSport];
+      if (mockData) {
+        setMonthlyPackages(mockData.monthlyPackages);
+      } else {
+        console.error("Error fetching monthly packages:", error);
+      }
     }
-  };
+  }, [selectedSport]);
 
-  const fetchTimeSlots = async () => {
+  const fetchTimeSlots = useCallback(async () => {
     try {
       const response = await fetch("http://192.168.1.6:8080/api/freeHitZone/fetch/slots");
       const timeSlotData = await response.json();
       setTimeSlots(timeSlotData || []);
     } catch (error) {
-      console.error("Error fetching time slots:", error);
+      // Use mock data in case of error
+      const mockData = fetchMockData("fetchSlots");
+      if (mockData) {
+        setTimeSlots(mockData);
+      } else {
+        console.error("Error fetching time slots:", error);
+      }
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchSportsOptions();
+    fetchSlotsForSport();
+    fetchMonthlyPackages();
+    fetchTimeSlots();
+  }, [selectedSport, fetchSportsOptions, fetchSlotsForSport, fetchMonthlyPackages, fetchTimeSlots]);
 
   const handleSportChange = (sportId) => {
     setSelectedSport(sportId);
@@ -147,8 +171,6 @@ const Booking = () => {
         body: JSON.stringify(bookingData),
       });
   
-      const responseData = await response.json();
-  
       if (response.ok) {
         // Navigate to the 'UserBooking' page after a successful booking
         alert("Booking successful!");
@@ -162,8 +184,6 @@ const Booking = () => {
     }
   };
   
-  
-
   return (
     <div className="booking-container">
       <header>
@@ -248,7 +268,7 @@ const Booking = () => {
         {!isBookingConfirmed ? (
           <button onClick={handleBookNow} className="book-now-button">Book Now</button>
         ) : (
-          <p>Your booking is confirmed. Booking ID: {bookingDetails?.bookingId}</p>
+          <p>Your booking is confirmed.</p>
         )}
       </div>
     </div>
