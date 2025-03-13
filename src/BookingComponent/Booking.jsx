@@ -174,7 +174,7 @@ const Booking = () => {
       if (response.ok) {
         // Navigate to the 'UserBooking' page after a successful booking
         alert("Booking successful!");
-        navigate("/UserBooking");
+        navigate("/myBooking");
       } else {
         alert("Failed to book. Please try again later.");
       }
