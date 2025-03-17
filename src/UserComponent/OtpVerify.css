@@ -1,0 +1,56 @@
+.otp-container {
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9f9f9;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.otp-header {
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.otp-form {
+    width: 100%;
+    max-width: 400px;
+}
+
+.otp-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.otp-form .form-control {
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.otp-form .btn {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 4px;
+}
+
+.otp-form .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.otp-form .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.otp-form .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.otp-form p {
+    margin-top: 1rem;
+    color: #555;
+}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Alert, Container } from "react-bootstrap";
+import "./OtpVerify.css"; // Import the CSS file
 
 const OtpVerify = () => {
     const [mobile, setMobile] = useState("");
@@ -78,14 +79,14 @@ const OtpVerify = () => {
     };
 
     return (
-        <Container className="mt-4">
-            <h3 className="mb-3">OTP Verification</h3>
+        <Container className="otp-container">
+            <h3 className="otp-header">OTP Verification</h3>
 
             {error && <Alert variant="danger">{error}</Alert>}
             {success && <Alert variant="success">{success}</Alert>}
 
             {!otpSent ? (
-                <Form>
+                <Form className="otp-form">
                     <Form.Group controlId="mobile">
                         <Form.Label>Enter Mobile Number</Form.Label>
                         <Form.Control
@@ -101,7 +102,7 @@ const OtpVerify = () => {
                     </Button>
                 </Form>
             ) : (
-                <Form>
+                <Form className="otp-form">
                     <Form.Group controlId="otp">
                         <Form.Label>Enter OTP</Form.Label>
                         <Form.Control

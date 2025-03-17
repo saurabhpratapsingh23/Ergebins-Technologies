@@ -4,10 +4,24 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ttt6 from "../images/ttt6.jpg";
 import cricket from "../images/cricket.jpg";
-
 import Footer from "./Footer";
+import { data } from "../mockAPI/MockAPI"; // Import mock data
 
 const HomePage = () => {
+  const [sports, setSports] = useState(data.fetchSports.sports); // Use mock data as fallback
+
+  useEffect(() => {
+    axios.get("http://54.165.1.101:8085/api/freeHitZone/fetch")
+      .then(response => {
+        if (response.data.success) {
+          setSports(response.data.sports);
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching sports:", error);
+      });
+  }, []);
+
   return (
     <div>
       <Carousel />

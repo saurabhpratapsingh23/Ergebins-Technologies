@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { fetchMockData } from "../mockAPI/MockAPI"; // Import the mock API
 
 const UserBooking = () => {
   const [bookings, setBookings] = useState([]);
@@ -18,7 +19,13 @@ const UserBooking = () => {
           setError("Failed to fetch bookings.");
         }
       } catch (err) {
-        setError("Error fetching bookings. Please try again later.");
+        // Use mock data in case of error
+        const mockData = fetchMockData("fetchBookings");
+        if (mockData) {
+          setBookings(mockData.bookings);
+        } else {
+          setError("Error fetching bookings. Please try again later.");
+        }
       } finally {
         setLoading(false);
       }

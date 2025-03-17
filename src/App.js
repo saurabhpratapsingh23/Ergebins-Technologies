@@ -21,12 +21,12 @@ import Booking from "./BookingComponent/Booking";
 // import './path-to-classy-navbar.css'; // Update the path as necessary
 import UserBooking from "./BookingComponent/UserBooking";
 import GameBooking from "./page/GameBooking";
-import Footer from "./page/Footer";
-import Services from "./page/Services";
+// import Footer from "./page/Footer";
+// import Services from "./page/Services";
 import Cricket from "./page/Services/Cricket";
 import TableTennis from "./page/Services/TableTennis";
 import OtpVerify from "./UserComponent/OtpVerify";
-
+import ForgetPassword from "./UserComponent/ForgetPassword";
 
 function App() {
   return (
@@ -45,6 +45,7 @@ function App() {
         <Route path="/user/login" element={<UserLoginForm />} />
         <Route path="/user/verifyotp" element={<OtpVerify />} />
         <Route path="/booking" element={<Booking />} />
+        <Route path="/user/customer/forget-password" element={<ForgetPassword />} />
 
         {/* <Route path="admin/ground/add" element={<AddGroundForm />} />
         <Route path="book/ground/add" element={<AddGroundForm />} />
@@ -61,8 +62,8 @@ function App() {
         <Route path="/ground/review/add" element={<AddReview />} />
         <Route path="/admin/ground/all" element={<ViewAllGround />} /> */}
         <Route path="/freeHitZone/AllSports" element={<ViewAllSports />} />
-        <Route path="/Gamebooking" element={<GameBooking/>} />
-        <Route path="/UserBooking"element={<UserBooking/>} />
+        <Route path="/gamebooking" element={<GameBooking/>} />
+        <Route path="/myBookings"element={<UserBooking/>} />
         <Route path="/services/cricket" element={<Cricket/>} />
         <Route path="/services/tennis" element={<TableTennis/>} />
         {/* <Route path="user/admin/booking/all" element={<ViewAllBooking />} />
