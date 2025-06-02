@@ -1,0 +1,110 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .booking-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .toggle-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  
+  .toggle-button {
+    margin: 5px;
+    padding: 10px 20px;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+  }
+  
+  .toggle-button.active {
+    background: black;
+    color: white;
+  }
+  
+  .calendar-and-slots {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .calendar {
+    flex: 1 1 100%;
+    margin-bottom: 20px;
+  }
+  
+  .slot-selection {
+    flex: 1 1 100%;
+    margin-bottom: 20px;
+  }
+  
+  @media (min-width: 768px) {
+    .calendar {
+      flex: 1;
+      margin-right: 20px;
+    }
+  
+    .slot-selection {
+      flex: 2;
+    }
+  }
+  
+  .time-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+    margin: 10px 0;
+  }
+  
+  .time-slot {
+    padding: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.3s, color 0.3s;
+  }
+  
+  .time-slot.selected {
+    background: green;
+    color: white;
+  }
+  
+  .booking-summary {
+    margin-top: 20px;
+  }
+  
+  .add-button,
+  .book-now-button,
+  .remove-button {
+    margin: 10px 0;
+    padding: 10px;
+    background: orange;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .add-button:hover,
+  .book-now-button:hover,
+  .remove-button:hover {
+    background: darkorange;
+  }
+  
+  .remove-button {
+    background: red;
+  }
+  
+  .remove-button:hover {
+    background: darkred;
+  }
+  
